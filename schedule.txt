@@ -1,45 +1,44 @@
 Wk Day Date     Event      Prac  Purpose
-1  Tue 24 Sep   Lecture          1. programs made of equations; running them
-   Fri 27 Sep   Lecture          2. defining functions (H4)
-2  Thu  3 Oct   Deadline   1     4pm
-   Thu  3 Oct   Tutorial   2     T1. Prac2 unveil
-   Fri  4 Oct   Lecture          3. list comprehensions (H5)
-3  Mon  7 Oct   Lab        2
-   Tue  8 Oct   Lecture          4. recursive functions (H6)
-   Thu 10 Oct   Tutorial   2     T2. Prac2 firefight
-   Fri 11 Oct   Lecture          5. higher-order functions (H7)
-4  Mon 14 Oct   Lab        2
-   Tue 15 Oct   Lecture          6. declaring types and classes (H8)
-   Thu 17 Oct   Tutorial   3     T3. Prac3 unveil
-   Fri 18 Oct   Lecture          7. QuickCheck
-5  Mon 21 Oct   Deadline   2     2pm
-                Lab-Test   2
+1  Tue 24 Sep   Lecture          1. introduction; data and functions
+   Fri 27 Sep   Lecture          2. defining functions
+2  Thu  3 Oct   Tutorial   1     T1. Ex1 unveil
+   Fri  4 Oct   Lecture          3. recursive functions I
+3  Mon  7 Oct   Lab        1
+   Tue  8 Oct   Lecture          4. recursive functions II
+   Thu 10 Oct   Tutorial   1     T2. Ex1 firefight
+   Fri 11 Oct   Lecture          5. higher-order functions
+4  Mon 14 Oct   Lab        1
+   Tue 15 Oct   Lecture          6. modelling with datatypes
+   Thu 17 Oct   Tutorial   2     T3. Ex2 unveil
+   Fri 18 Oct   Lecture          7. list comprehensions
+5  Mon 21 Oct   Deadline   1     2pm
+                Lab-Test   1
    Tue 22 Oct   Lecture          8. recursion schemes
-   Thu 24 Oct   Tutorial   2     T4. Prac2 autopsy
+   Thu 24 Oct   Tutorial   1     T4. Ex1 autopsy
    Fri 25 Oct   Lecture          9. functors and containers
-6  Mon 28 Oct   Lab        3
+6  Mon 28 Oct   Lab        2
    Tue 29 Oct   Lecture          10. building pure evaluators
-   Thu 31 Oct   Tutorial   3     T5. Prac3 firefight
-   Fri  1 Nov   Lecture          11. applicatives and monads (H12)
-7  Mon  4 Nov   Lab        3
-   Tue  5 Nov   Lecture          12. monads we like
-   Thu  7 Nov   Tutorial   4     T6. Prac4 unveil
-   Fri  8 Nov   Lecture          13. monadic parsing (H13)
-8  Mon 11 Nov   Deadline   3     2pm
-                Lab-Test   3     Prac3 test
+   Thu 31 Oct   Tutorial   2     T5. Ex2 firefight
+   Fri  1 Nov   Lecture          11. applicatives
+7  Mon  4 Nov   Lab        2
+   Tue  5 Nov   Lecture          12. monads
+   Thu  7 Nov   Tutorial   3     T6. Ex3 unveil
+   Fri  8 Nov   Lecture          13. monadic parsing
+8  Mon 11 Nov   Deadline   2     2pm
+                Lab-Test   2     Ex2 test
    Tue 12 Nov   Lecture          14. more monadic parsing
-   Thu 14 Nov   Tutorial   3     T7. Prac3 autopsy
+   Thu 14 Nov   Tutorial   2     T7. Ex2 autopsy
    Fri 15 Nov   Lecture          15. state and custom monads
-9  Mon 18 Nov   Lab        4
+9  Mon 18 Nov   Lab        3
    Tue 19 Nov   Lecture          16. visiting and traversing containers
-   Thu 21 Nov   Tutorial   4     T8. Prac4 firefight
-   Fri 22 Nov   Lecture          17. infinite data and processes (H15)
-10 Mon 25 Nov   Lab        4
-   Tue 26 Nov   Lecture          18. Previ.se Guest Lecture
-   Thu 28 Nov   Tutorial   4     T9. Prac4 firefight
+   Thu 21 Nov   Tutorial   3     T8. Ex3 firefight
+   Fri 22 Nov   Lecture          17. infinite data and processes
+10 Mon 25 Nov   Lab        3
+   Tue 26 Nov   Lecture          18. TBD
+   Thu 28 Nov   Tutorial   3     T9. Ex3 firefight
    Fri 29 Nov   Lecture          19. parallelism
-11 Mon  2 Dec   Deadline   4     2pm
-                Lab-Test   4     Prac4 test
+11 Mon  2 Dec   Deadline   3     2pm
+                Lab-Test   3     Ex3 test
    Tue  3 Dec   Lecture          20. concurrency
-   Thu  5 Dec   Tutorial   4     T10. Prac4 autopsy
+   Thu  5 Dec   Tutorial   3     T10. Ex3 autopsy
    Fri  6 Dec   Lecture          21. a look at Agda (CS410 propaganda)
