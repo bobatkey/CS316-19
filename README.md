@@ -14,7 +14,7 @@ The course lecturer is **Bob Atkey**. Office LT1305 [robert.atkey@strath.ac.uk](
 
 ## Lectures
 
-Lectures are at **13:00 Tuesdays** in JA501 and **11am Fridays** in RC446.
+Lectures are at **13:00 Tuesdays** in JA501 and **11am Fridays** in RC447.
 
 Most of the lectures involve me doing live coding with explanations of what I am doing. This repository contains cleaned up versions of the live coding, interspersed with commentary.
 
