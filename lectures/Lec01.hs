@@ -1,6 +1,8 @@
 {-# OPTIONS_GHC -fwarn-incomplete-patterns #-} 
 module Lec01 where
 
+import Prelude hiding (Left, Right)
+
 {-    LECTURE 01 : PROGRAMS MADE OF EQUATIONS; RUNNING THEM
 
 
@@ -406,9 +408,6 @@ total (Cons x xs) = x + total xs
       1 + 3
     =                               by (built in) arithmetic
       4
-
-   As you'll've seen in the "Evaluation Game" exercise, quite complex
-   behaviour can be built up by pattern matching and reduction.
 
    Note that 'total' can only be applied to data that is of type 'List
    Int'. If we try to apply 'total' to a list of booleans ('True's and
