@@ -334,10 +334,13 @@ ex3'' = [[], []]
 
 {-    PART 2 : TRANSFORMING DATA BY PATTERN MATCHING
 
-   As we say above, we define functions by /pattern matching/. This
+   As I said above, we define functions by /pattern matching/. This
    means that every function is a list of patterns of data that it can
    match with, and for each pattern a description of how that data is
-   transformed. To define functions that operate on 
+   transformed. To define functions that operate on data of arbitrary
+   size, like 'List's, our functions will be recursive. A recursive
+   function may refer to itself in the right hand sides of one of its
+   lines.
 
    Here is an example, which totals up all the elements in a list of
    'Int's: -}
