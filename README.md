@@ -19,5 +19,6 @@ Lectures are at **13:00 Tuesdays** in JA501 and **11am Fridays** in RC447.
 Most of the lectures involve me doing live coding with explanations of what I am doing. This repository contains cleaned up versions of the live coding, interspersed with commentary.
 
  - [Lecture 01](lectures/Lec01.hs) : Data and Pattern Matching
+ - [Lecture 02](lectures/Lec02.hs) : Defining Functions
 
 ## Exercises
