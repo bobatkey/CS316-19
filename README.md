@@ -21,4 +21,14 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - [Lecture 01](lectures/Lec01.hs) : Data and Pattern Matching
  - [Lecture 02](lectures/Lec02.hs) : Defining Functions
 
-## Exercises
+## Coursework
+
+This course is entirely assessed by coursework. The split between the three exercises is shown below:
+
+- Exercise 1 (30%) : [First Order Programming](exercises/Ex1.hs). This was released on Thursday 3rd October (week 2), and the final deadline and test are on Monday 21st October (week 5).
+
+- Exercise 2 (30%) : Higher Order Programming. This will be released on Thursday 17th October (week 4), and the final deadline and test are on Monday 11th November (week 8).
+
+- Exercise 3 (40%) : GHOUL. This will be released on Thursday 7th November (week 7), and the final deadline and test are on Monday 2nd December (week 11).
+
+After each of the exercises has been marked, we will email you your marks
