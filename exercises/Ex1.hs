@@ -65,7 +65,7 @@ concatLists = undefined
    Write a function that performs this operation to a list of
    lists. For example:
 
-        consAll 1 [[2,3],[4,5]] = [[1,2,3],[1,4,5]]
+        consAll 1 [[2,3],[4,5]] == [[1,2,3],[1,4,5]]
 -}
 
 consAll :: a -> [[a]] -> [[a]]
