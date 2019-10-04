@@ -20,7 +20,7 @@ Most of the lectures involve me doing live coding with explanations of what I am
 
  - [Lecture 01](lectures/Lec01.hs) : Data and Pattern Matching ([live version](lectures/Lec01Live.hs))
  - [Lecture 02](lectures/Lec02.hs) : Defining Functions ([live version](lectures/Lec02Live.hs))
- - [Lecture 03](lectures/Lec03.hs) : Recursive functions I
+ - [Lecture 03](lectures/Lec03.hs) : Recursive functions I ([live version](lectures/Lec03Live.hs).
  - Lecture 04 : Recursive functions II
  - Lecture 05 : Higher order functions
  - Lecture 06 : Modelling with datatypes
