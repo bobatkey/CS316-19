@@ -557,7 +557,7 @@ testNotT = process notGate [True]
 testNotF :: [Bool]
 testNotF = process notGate [False]
 
-{- 2.3.0 Outputting a single bit. Write a function that takes a boolean
+{- 1.3.0 Outputting a single bit. Write a function that takes a boolean
    value and returns a process that outputs that bit and ends. You
    should have:
 
@@ -570,7 +570,7 @@ output = undefined
 
 {- 1 MARK -}
 
-{- 2.3.1 Copycat. Write a definition of a process, similar to the
+{- 1.3.1 Copycat. Write a definition of a process, similar to the
    notGate, that reads its input and outputs it unaltered. You should
    have:
 
@@ -583,7 +583,7 @@ copyCat = undefined
 
 {- 1 MARK -}
 
-{- 2.3.2 Outputting multiple bits. Write a function that takes a list of
+{- 1.3.2 Outputting multiple bits. Write a function that takes a list of
    bits and generates a process that outputs all of them, in
    order. You should have:
 
@@ -596,7 +596,7 @@ outputs = undefined
 
 {- 2 MARKS -}
 
-{- 2.3.3 Expectations. Write a function that given a list of bits, makes
+{- 1.3.3 Expectations. Write a function that given a list of bits, makes
    a process that reads that many bits from the input and outputs
    'True' if all the bits match the input list, and 'False'
    otherwise. You should have:
@@ -615,7 +615,7 @@ expects = undefined
 
 {- 3 MARKS -}
 
-{- 2.3.4 Sequencing processes. Write a function which combines two
+{- 1.3.4 Sequencing processes. Write a function which combines two
    processes in sequence, so that the second begins once the first has
    ended.  That is, you should 'graft' the second process in place of
    all the End markers in the first process. HINT: the structure of
