@@ -446,7 +446,7 @@ execute = undefined
       'r'  -- move right
       'l'  -- move left (needs the moveLeft function written)
       'iX' -- inserts 'X' (needs the 'insert' function)
-      'x'  -- deletes the character under the cursor (needs 'delete')
+      'x'  -- removes the character directly to the left of the cursor (needs 'backspace')
 
     An example:
 
