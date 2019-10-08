@@ -10,7 +10,7 @@ See the [schedule](schedule.txt).
 
 ## Contact
 
-The course lecturer is **Bob Atkey**. Office LT1305 [robert.atkey@strath.ac.uk](mailto:robert.atkey@strath.ac.uk)
+The course lecturer is **Bob Atkey**. Office LT1305 [robert.atkey@strath.ac.uk](mailto:robert.atkey@strath.ac.uk).
 
 ## Lectures
 
@@ -20,7 +20,7 @@ Most of the lectures involve me doing live coding with explanations of what I am
 
  - [Lecture 01](lectures/Lec01.hs) : Data and Pattern Matching ([live version](lectures/Lec01Live.hs))
  - [Lecture 02](lectures/Lec02.hs) : Defining Functions ([live version](lectures/Lec02Live.hs))
- - [Lecture 03](lectures/Lec03.hs) : Recursive functions I ([live version](lectures/Lec03Live.hs).
+ - [Lecture 03](lectures/Lec03.hs) : Recursive functions I ([live version](lectures/Lec03Live.hs))
  - [Lecture 04](lectures/Lec04.hs) : Recursive functions II (notes pending, see notes for Lec04)
  - [Lecture 05](lectures/Lec05.hs) : Higher order functions
  - [Lecture 06](lectures/Lec06.hs) : List comprehensions
