@@ -27,6 +27,18 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - Lecture 07 : Modelling with datatypes
  - Lecture 08 : Recursion Schemes
  - Lecture 09 : Functors and Containers
+ - Lecture 10 : Programming with side effects
+ - Lecture 11 : Applicatives
+ - Lecture 12 : Monads
+ - Lecture 13 : I/O
+ - Lecture 14 : Parser Combinators I
+ - Lecture 15 : Parser Combinators II
+ - Lecture 16 : Visiting and Traversing
+ - Lecture 17 : Lazy Evaluation
+ - Lecture 18 :
+ - Lecture 19 : Parallelism
+ - Lecture 20 : Concurrency
+ - Lecture 21 : CS410 Propaganda
 
 ## Coursework
 
