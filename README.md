@@ -21,10 +21,12 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - [Lecture 01](lectures/Lec01.hs) : Data and Pattern Matching ([live version](lectures/Lec01Live.hs))
  - [Lecture 02](lectures/Lec02.hs) : Defining Functions ([live version](lectures/Lec02Live.hs))
  - [Lecture 03](lectures/Lec03.hs) : Recursive functions I ([live version](lectures/Lec03Live.hs).
- - Lecture 04 : Recursive functions II
- - Lecture 05 : Higher order functions
- - Lecture 06 : Modelling with datatypes
- - Lecture 07 : List comprehensions
+ - [Lecture 04](lectures/Lec04.hs) : Recursive functions II (notes pending, see notes for Lec04)
+ - [Lecture 05](lectures/Lec05.hs) : Higher order functions
+ - [Lecture 06](lectures/Lec06.hs) : List comprehensions
+ - Lecture 07 : Modelling with datatypes
+ - Lecture 08 : Recursion Schemes
+ - Lecture 09 : Functors and Containers
 
 ## Coursework
 
