@@ -8,9 +8,9 @@ Wk Day Date     Event      Prac  Purpose
    Thu 10 Oct   Tutorial   1     T2. Ex1 firefight
    Fri 11 Oct   Lecture          5. higher-order functions
 4  Mon 14 Oct   Lab        1
-   Tue 15 Oct   Lecture          6. modelling with datatypes
+   Tue 15 Oct   Lecture          6. list comprehensions
    Thu 17 Oct   Tutorial   2     T3. Ex2 unveil
-   Fri 18 Oct   Lecture          7. list comprehensions
+   Fri 18 Oct   Lecture          7. modelling with datatypes
 5  Mon 21 Oct   Deadline   1     2pm
                 Lab-Test   1
    Tue 22 Oct   Lecture          8. recursion schemes
