@@ -24,9 +24,9 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - [Lecture 04](lectures/Lec04.hs) : Recursive functions II (notes pending, see notes for Lec04)
  - [Lecture 05](lectures/Lec05.hs) : Higher order functions ([live version](lectures/Lec05Live.hs))
  - [Lecture 06](lectures/Lec06.hs) : List comprehensions ([live version](lectures/Lec06Live.hs))
- - [Lecture 07 : Modelling with datatypes](lectures/Lec07.hs)
- - [Lecture 08 : Recursion Schemes](lectures/Lec08.hs) (draft)
- - [Lecture 09 : Functors and Containers](lectures/Lec09.hs) (needs minor updating)
+ - [Lecture 07](lectures/Lec07.hs) : Modelling with datatypes
+ - [Lecture 08](lectures/Lec08.hs) : Recursion Schemes (draft)
+ - [Lecture 09](lectures/Lec09.hs) : Functors and Containers (needs minor updating)
  - Lecture 10 : Programming with side effects
  - Lecture 11 : Applicatives
  - Lecture 12 : Monads
