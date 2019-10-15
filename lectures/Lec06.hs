@@ -8,7 +8,7 @@
    extension called ParallelListComp: this enables syntax for /parallel/
    list comprehensions (see below). -}
 
-module Lec03 where
+module Lec06 where
 
 {- We are going to redefine some functions from the standard library
    prelude, which is normally imported automatically, and use some
@@ -63,10 +63,10 @@ ex2 = [2,4..120]
    every even number between 2 and 120:
 
       GHCi, version 8.0.2: http://www.haskell.org/ghc/  :? for help
-      Prelude> :load "Lec04.hs"
-      [1 of 1] Compiling Lec04            ( Lec04.hs, interpreted )
-      Ok, modules loaded: Lec04.
-      *Lec04> ex2
+      Prelude> :load "Lec06.hs"
+      [1 of 1] Compiling Lec06            ( Lec06.hs, interpreted )
+      Ok, modules loaded: Lec06.
+      *Lec06> ex2
       [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,118,120]
 
 
@@ -76,18 +76,18 @@ ex2 = [2,4..120]
    list will be used as the step length, and new elements are generated
    until we go past the last element:
 
-      *Lec04> [1,5..11]
+      *Lec06> [1,5..11]
       [1,5,9]
 
    We can also make infinite lists by leaving out the upper bound:
 
-      *Lec04> [4..]
+      *Lec06> [4..]
       [4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203Interrupted
 
    Here we had to press Ctrl-C to stop printing out the list
    forever. Computing with such infinite data is possible because
    of /lazy evaluation/, which we will learn more about in Lecture
-   19.
+   17.
 
    Finally, we come to the comprehensions that the lecture title refers
    to. In mathematics, we can also form sets by describing the properties
@@ -132,7 +132,7 @@ allpairs = [ (x, y) | x <- [0..5], y <- [4..6] ]
 {- If we evaluate this, we see that we get all pairs (x, y), where x
    ranges from 0 to 5, and y ranges from 4 to 6:
 
-      *Lec04> allpairs
+      *Lec06> allpairs
       [(0,4),(0,5),(0,6),(1,4),(1,5),(1,6),(2,4),(2,5),(2,6),(3,4),(3,5),(3,6),(4,4),(4,5),(4,6),(5,4),(5,5),(5,6)]
 
    Note the order of the pairs: first we set x = 0, and let y range
@@ -146,7 +146,7 @@ allpairsOtherorder = [ (x, y) | y <- [4..6], x <- [0..5] ]
 {- we see that we get the same elements as before, but in a different
    order:
 
-      *Lec04> allpairsOtherorder
+      *Lec06> allpairsOtherorder
       [(0,4),(1,4),(2,4),(3,4),(4,4),(5,4),(0,5),(1,5),(2,5),(3,5),(4,5),(5,5),(0,6),(1,6),(2,6),(3,6),(4,6),(5,6)]
 
    This time we first let y range from 4 to 6 in the "outer loop", with
@@ -164,7 +164,7 @@ ordpairs = [ (x, y) | x <- [1..3], y <- [x..5] ]
 {- Here the second component y will always be <= x, so this way
    we generate ordered pairs:
 
-      *Lec04> ordpairs
+      *Lec06> ordpairs
       [(1,1),(1,2),(1,3),(1,4),(1,5),(2,2),(2,3),(2,4),(2,5),(3,3),(3,4),(3,5)]
 
    We can use this for a neat way to write the function which
@@ -234,7 +234,7 @@ numberedPrimesWrong = [ (i, p) | p <- primes , i <- [1..] ]
    all indices in the infinite list [1..] before considering the
    next prime, which understandably fails to achieve what we want:
 
-      *Lec04> take 10 numberedPrimesWrong
+      *Lec06> take 10 numberedPrimesWrong
       [(1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1)]
 
    (The function take from the standard library that returns the n
@@ -344,7 +344,7 @@ books db per = [ book | (per', book, _) <- db, per == per' ]
 
    As expected:
 
-      *Lec04> books exampleDB "Alice"
+      *Lec06> books exampleDB "Alice"
       ["Tintin","Asterix"]
 
    Note that writing -}
@@ -366,21 +366,21 @@ foo  = \ x -> \ x -> x
    silently take precedence over the first, as you can see if you
    for example try to evaluate f 1 2. if you start GHCi with the
    commandline option fwarn-name-shadowing (e.g.
-   "ghci -fwarn-name-shadowing lectures/Lec04.hs"), GHC will warn
+   "ghci -fwarn-name-shadowing lectures/Lec06.hs"), GHC will warn
    you when this happens:
 
       GHCi, version 8.0.2: http://www.haskell.org/ghc/  :? for help
-      [1 of 1] Compiling Lec04            ( lectures/Lec04.hs, interpreted )
+      [1 of 1] Compiling Lec06            ( lectures/Lec06.hs, interpreted )
 
-      lectures/Lec04.hs:352:31: warning: [-Wname-shadowing]
+      lectures/Lec06.hs:352:31: warning: [-Wname-shadowing]
           This binding for ‘per’ shadows the existing binding
-           bound at lectures/Lec04.hs:352:15
+           bound at lectures/Lec06.hs:352:15
 
-      lectures/Lec04.hs:362:17: warning: [-Wname-shadowing]
+      lectures/Lec06.hs:362:17: warning: [-Wname-shadowing]
           This binding for ‘x’ shadows the existing binding
-            bound at lectures/Lec04.hs:362:10
-      Ok, modules loaded: Lec04.
-      *Lec04>
+            bound at lectures/Lec06.hs:362:10
+      Ok, modules loaded: Lec06.
+      *Lec06>
 
    End of digression. -}
 
@@ -404,7 +404,7 @@ lateBooks db = [ (book,per) | (per, book, fee) <- db, fee > 0 ]
       https://data.glasgow.gov.uk/
 
    The files in question can be found in the git repository
-   in the lectures/Lec04-data subdirectory. Looking at the
+   in the lectures/Lec06-data subdirectory. Looking at the
    files, we see that death.csv contains both "data zones"
    and "intermediate geography names", whereas birth.csv
    contains a "geography code" (matching the data zone from
@@ -413,13 +413,13 @@ lateBooks db = [ (book,per) | (per, book, fee) <- db, fee > 0 ]
    name also for the death statistics. In GHCi, we can do this
    as follows:
 
-      *Lec04> readFile "Lec04-data/birth.csv"  -- read the file
+      *Lec06> readFile "Lec06-data/birth.csv"  -- read the file
       "GeographyCode:CS-allbirths:CS-femalebirths:CS-malebirths\nS01003025:5:3:2\nS01003026:17:7:10\nS01003027:17:9:8\nS01003028:6:5:1\nS01003029:14:5:9\n[...]
-      *Lec04> lines it -- convert string into list of lines
+      *Lec06> lines it -- convert string into list of lines
       ["GeographyCode:CS-allbirths:CS-femalebirths:CS-malebirths","S01003025:5:3:2","S01003026:17:7:10","S01003027:17:9:8","S01003028:6:5:1","S01003029:14:5:9",[...]]
-      *Lec04> map (splitOn ":") it -- split up each line
+      *Lec06> map (splitOn ":") it -- split up each line
       [["GeographyCode","CS-allbirths","CS-femalebirths","CS-malebirths"],["S01003025","5","3","2"],["S01003026","17","7","10"],["S01003027","17","9","8"],["S01003028","6","5","1"],["S01003029","14","5","9"],[...]]
-      *Lec04> let birth = it
+      *Lec06> let birth = it
 
    At each stage, "it" refers to the result of the previous
    computation. By doing things in stages, we don't have to
@@ -427,13 +427,13 @@ lateBooks db = [ (book,per) | (per, book, fee) <- db, fee > 0 ]
    beginning. However when we now do the same for the second
    file, we have spotted the pattern:
 
-      *Lec04> readFile "Lec04-data/death.csv"
+      *Lec06> readFile "Lec06-data/death.csv"
       "Data Zone:Intermediate Geography Name:CS-alldeaths\nS01003025:Carmunnock South:13\nS01003026:Carmunnock South:13\nS01003027:Darnley East:23\nS01003028:Glenwood South:11\nS01003029:Carmunnock South:12\nS01003030:Glenwood South:6\nS01003031:Glenwood South:0\nS01003032:Glenwood South:7\nS01003033:Glenwood South:24\nS01003034:Darnley East:1\n[...]
-      *Lec04> let death = map (splitOn ":") (lines it)
+      *Lec06> let death = map (splitOn ":") (lines it)
 
    We can now join the files using a list comprehension:
 
-      *Lec04> let joined = [ (name ++ " " ++ zone, b, d) | [zone, name, d] <- death, [zone', b, _, _] <- birth, zone == zone' ]
+      *Lec06> let joined = [ (name ++ " " ++ zone, b, d) | [zone, name, d] <- death, [zone', b, _, _] <- birth, zone == zone' ]
 
    The following function can be used to print the table in more
    readable form. Don't worry to much about the details of it for
@@ -447,7 +447,7 @@ printTable  = mapM_ (\ (n,b,d) -> putStrLn $ n ++ ":" ++
 
 {-
 
-      *Lec04> printTable joined
+      *Lec06> printTable joined
       "Calton, Galllowgate and Bridgeton" S01003248:      22    13
       "Calton, Galllowgate and Bridgeton" S01003270:      14    8
       "Calton, Galllowgate and Bridgeton" S01003271:      20    11
@@ -489,11 +489,11 @@ printTable  = mapM_ (\ (n,b,d) -> putStrLn $ n ++ ":" ++
    many areas the population decreased, increased or stayed
    the same in 2012:
 
-      *Lec04> length [ (name ++ " " ++ zone, b, d) | [zone, name, d] <- death, [zone', b, _, _] <- birth, zone == zone', (read b :: Int) < read d ]
+      *Lec06> length [ (name ++ " " ++ zone, b, d) | [zone, name, d] <- death, [zone', b, _, _] <- birth, zone == zone', (read b :: Int) < read d ]
       265
-      *Lec04> length [ (name ++ " " ++ zone, b, d) | [zone, name, d] <- death, [zone', b, _, _] <- birth, zone == zone', (read b :: Int) > read d ]
+      *Lec06> length [ (name ++ " " ++ zone, b, d) | [zone, name, d] <- death, [zone', b, _, _] <- birth, zone == zone', (read b :: Int) > read d ]
       385
-      *Lec04> length [ (name ++ " " ++ zone, b, d) | [zone, name, d] <- death, [zone', b, _, _] <- birth, zone == zone', (read b :: Int) == read d ]
+      *Lec06> length [ (name ++ " " ++ zone, b, d) | [zone, name, d] <- death, [zone', b, _, _] <- birth, zone == zone', (read b :: Int) == read d ]
       44
 
    (Here we are using the function read from the Read type class
