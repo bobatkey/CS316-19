@@ -247,7 +247,8 @@ invertOrdering GT = LT
    comparator that implements the reverse ordering. Use
    'invertOrdering'. -}
 
-invert :: Comparator a -> Comparator a
+invert :: Comparator a         -> Comparator a
+       -- (a -> a -> Ordering) -> (a -> a -> Ordering)
 invert = undefined
 
 {- For example:
@@ -731,7 +732,7 @@ over = undefined
    transparent. We can then set a background by putting the resulting
    picture 'over' a background.
 
-   Define the 'cut' function, using 'liftBitmap': -}
+   Define the 'cut' function, using 'pictureApply': -}
 
 cut :: Monoid a => Picture Bool -> Picture a -> Picture a
 cut = undefined
