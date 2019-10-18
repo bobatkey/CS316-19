@@ -776,7 +776,7 @@ rotate angle (x,y) = ( x * cos angle - y * sin angle
 transform :: (Point -> Point) -> Picture a -> Picture a
 transform = undefined
 
-{- For example, 'transform (rotate pi/4) (rectangle 100 200)' will
+{- For example, 'transform (rotate (pi/4)) (rectangle 100 200)' will
    generate a picture (of booleans) that is a rectangle rotated by
    'pi/4' radians (45 degrees). -}
 
