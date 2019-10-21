@@ -8,6 +8,9 @@ import Prelude hiding ( Monoid (..)
 
 {-        LECTURE 09 : FUNCTORS AND CONTAINERS
 
+     FIXME: Semigroups...
+
+
    So far, we have looked at several kinds of data structure that
    'contain' some other kind of data. Our most common example has been
    the 'lists'. We've seen the definition of list multiple times so
