@@ -5,14 +5,21 @@ import Prelude hiding (sum, foldr, foldl, map, filter, Either (..), Maybe (..))
 
 {-      LECTURE 08 : RECURSION SCHEMES
 
-   TODO, and introduction:
+   In Lecture 05 we looked at some ways that higher order functions
+   can be used to combine common patterns of behaviour into single
+   functions that are specialised by supplying the right functions to
+   them. Our main examples were abstracting the idea of applying a
+   function to every element of a list to get a new list ('map') and
+   filtering a list based on some condition ('filter').
 
-   Recursion schemes identify patterns of recursion.
+   In this lecture, we look at some more examples of higher order
+   functions that capture common patterns. This time, we look at the
+   common pattern of recursing over values of a data type. These
+   patterns have the general name of "recursion schemes".
 
-   Recursion driven by datatypes.
-
-   Analogous to the Visitor pattern in OO languages.
--}
+   Recursion schemes capture the pattern of "doing something" to every
+   node in a datastructure. They are very similar to the idea of the
+   Visitor pattern in OO languages. -}
 
 {-        Part I : FOLDING OVER LISTS
 
@@ -363,3 +370,18 @@ foldMaybe n j (Just x) = j x
 
 fromMaybe :: a -> Maybe a -> a
 fromMaybe x = foldMaybe x (\x -> x)
+
+{- EXERCISE: The following is a datatype of Natural Numbers (whole
+   numbers greater than or equal to zero), represented in unary. A
+   natural number 'n' is represented as 'n' applications of 'Succ' to
+   'Zero'. So '2' is 'Succ (Succ Zero)'. Using the same recipe as
+   above, work out the type and implementation of a 'fold' function
+   for 'Nat's. -}
+
+data Nat
+  = Zero
+  | Succ Nat
+  deriving Show
+
+{- HINT: think about proofs by induction. A proof by induction has a
+   base case and a step case. -}
