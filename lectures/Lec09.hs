@@ -17,7 +17,7 @@ import Prelude hiding ( Monoid (..)
    far, but here it is again using the standard Haskell notation
    rather than the 'Nil' and 'Cons' constructors.
 
-      data [a] = [] | a :: [a]
+      data [a] = [] | a : [a]
 
    Lists store data in a sequence, one after the other.
 
