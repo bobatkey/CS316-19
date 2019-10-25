@@ -23,18 +23,18 @@ Wk Day Date     Event      Prac  Purpose
 7  Mon  4 Nov   Lab        2
    Tue  5 Nov   Lecture          12. monads
    Thu  7 Nov   Tutorial   3     T6. Ex3 unveil
-   Fri  8 Nov   Lecture          13. monadic parsing
+   Fri  8 Nov   Lecture          13. I/O
 8  Mon 11 Nov   Deadline   2     2pm
                 Lab-Test   2     Ex2 test
-   Tue 12 Nov   Lecture          14. more monadic parsing
+   Tue 12 Nov   Lecture          14. Parser Combinators I
    Thu 14 Nov   Tutorial   2     T7. Ex2 autopsy
-   Fri 15 Nov   Lecture          15. state and custom monads
+   Fri 15 Nov   Lecture          15. Parser Combinators II
 9  Mon 18 Nov   Lab        3
    Tue 19 Nov   Lecture          16. visiting and traversing containers
    Thu 21 Nov   Tutorial   3     T8. Ex3 firefight
    Fri 22 Nov   Lecture          17. infinite data and processes
 10 Mon 25 Nov   Lab        3
-   Tue 26 Nov   Lecture          18. TBD
+   Tue 26 Nov   Lecture          18.
    Thu 28 Nov   Tutorial   3     T9. Ex3 firefight
    Fri 29 Nov   Lecture          19. parallelism
 11 Mon  2 Dec   Deadline   3     2pm
