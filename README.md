@@ -26,7 +26,7 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - [Lecture 06](lectures/Lec06.hs) : List comprehensions ([live version](lectures/Lec06Live.hs))
  - [Lecture 07](lectures/Lec07.hs) : Modelling with datatypes ([live version](lectures/Lec07Live.hs))
  - [Lecture 08](lectures/Lec08.hs) : Recursion Schemes ([live version](lectures/Lec08Live.hs))
- - [Lecture 09](lectures/Lec09.hs) : Functors and Containers (needs minor updating)
+ - [Lecture 09](lectures/Lec09.hs) : Functors and Containers (needs minor updating) ([live version](lectures/Lec09Live.hs))
  - Lecture 10 : Programming with side effects
  - Lecture 11 : Applicatives
  - Lecture 12 : Monads
