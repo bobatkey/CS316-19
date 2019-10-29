@@ -27,13 +27,13 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - [Lecture 07](lectures/Lec07.hs) : Modelling with datatypes ([live version](lectures/Lec07Live.hs))
  - [Lecture 08](lectures/Lec08.hs) : Recursion Schemes ([live version](lectures/Lec08Live.hs))
  - [Lecture 09](lectures/Lec09.hs) : Functors and Containers (needs minor updating) ([live version](lectures/Lec09Live.hs))
- - [Lecture 10](lectures/Lec10.hs) : Programming with side effects (needs fixing up)
- - Lecture 11 : Applicatives
- - Lecture 12 : Monads
+ - [Lecture 10](lectures/Lec10.hs) : Programming with Exceptions
+ - Lecture 11 : Programming with Side Effects
+ - Lecture 12 : Monads and Applicatives
  - Lecture 13 : I/O
  - Lecture 14 : Parser Combinators I
  - Lecture 15 : Parser Combinators II
- - Lecture 16 : Visiting and Traversing
+ - Lecture 16 : Visiting and Traversing Containers
  - Lecture 17 : Lazy Evaluation
  - Lecture 18 :
  - Lecture 19 : Parallelism
