@@ -55,3 +55,16 @@ This course is entirely assessed by coursework. The split between the three exer
 - Exercise 3 (40%) : GHOUL. This will be released on Thursday 7th November (week 7), and the final deadline and test are on Monday 2nd December (week 11).
 
 After each of the exercises has been marked, we will email you your marks
+
+## Uses of Haskell in Industry
+
+The following are some links to uses of Haskell in industry. These kinds of experience reports are often useful to see what engineers find useful in Haskell, and what they don't. Many of the features of Haskell (higher order functions, algebraic datatypes, pattern matching, immutability, type classes) are making their way into other languages because they have proved their worth in Haskell.
+
+- [Fighting spam with Haskell](https://engineering.fb.com/security/fighting-spam-with-haskell/) at Facebook.
+- [Habito: The Purely Functional Mortgage Broker](https://www.infoq.com/presentations/habito-mortgage-broker/).
+- [Semantic](https://github.com/github/semantic/) is GitHub's tool for analyzing source code to connect uses with definitions, and to look for differences between pieces of code.
+
+Other functional languages are also used at extremely large scale. For example:
+
+- [WhatsApp](https://www.wired.com/2015/09/whatsapp-serves-900-million-users-50-engineers/) uses the functional programming language [Erlang](https://www.erlang.org/) for all its backend services.
+- [Jane Street](https://www.janestreet.com/technology/) is a proprietary trading firm that almost exclusively uses the functional language [OCaml](https://www.ocaml.org/). They also offer [internships](https://www.janestreet.com/join-jane-street/internships/) for undergraduates.
