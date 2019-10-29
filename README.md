@@ -27,7 +27,7 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - [Lecture 07](lectures/Lec07.hs) : Modelling with datatypes ([live version](lectures/Lec07Live.hs))
  - [Lecture 08](lectures/Lec08.hs) : Recursion Schemes ([live version](lectures/Lec08Live.hs))
  - [Lecture 09](lectures/Lec09.hs) : Functors and Containers (needs minor updating) ([live version](lectures/Lec09Live.hs))
- - Lecture 10 : Programming with side effects
+ - [Lecture 10](lectures/Lec10.hs) : Programming with side effects (needs fixing up)
  - Lecture 11 : Applicatives
  - Lecture 12 : Monads
  - Lecture 13 : I/O
@@ -39,6 +39,10 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - Lecture 19 : Parallelism
  - Lecture 20 : Concurrency
  - Lecture 21 : CS410 Propaganda
+
+## Evaluation Game
+
+The [Evaluation Game](https://personal.cis.strath.ac.uk/robert.atkey/terms.html).
 
 ## Coursework
 
