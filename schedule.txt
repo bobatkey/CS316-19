@@ -17,11 +17,11 @@ Wk Day Date     Event      Prac  Purpose
    Thu 24 Oct   Tutorial   1     T4. Ex1 autopsy
    Fri 25 Oct   Lecture          9. functors and containers
 6  Mon 28 Oct   Lab        2
-   Tue 29 Oct   Lecture          10. programming with side effects
+   Tue 29 Oct   Lecture          10. programming with exceptions
    Thu 31 Oct   Tutorial   2     T5. Ex2 firefight
-   Fri  1 Nov   Lecture          11. applicatives
+   Fri  1 Nov   Lecture          11. programming with side effects
 7  Mon  4 Nov   Lab        2
-   Tue  5 Nov   Lecture          12. monads
+   Tue  5 Nov   Lecture          12. monads and applicatives
    Thu  7 Nov   Tutorial   3     T6. Ex3 unveil
    Fri  8 Nov   Lecture          13. I/O
 8  Mon 11 Nov   Deadline   2     2pm
