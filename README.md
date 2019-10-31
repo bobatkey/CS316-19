@@ -44,6 +44,10 @@ Most of the lectures involve me doing live coding with explanations of what I am
 
 The [Evaluation Game](https://personal.cis.strath.ac.uk/robert.atkey/terms.html).
 
+## Tutorial Questions
+
+- [Some questions on Higher Order Functions](tutorials/HOFQuestions.hs) and [their solutions](tutorials/HOFSolutions.hs).
+
 ## Coursework
 
 This course is entirely assessed by coursework. The split between the three exercises is shown below:
