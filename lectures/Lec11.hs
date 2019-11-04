@@ -52,6 +52,28 @@ module Lec11 where
    mutation. If we are careful to only use the most recently created
    variable, then we can simulate mutable state with immutable state.
 
+   Here, in a pseudo code mash up of Java and Haskell, is how this
+   would look. Every time we mutated a variable before, we define a
+   new variable.
+
+      int x0 = 5;
+       .. some code where x0 is 5 ..
+      int x1 = x0 + 5;
+       .. some code where x1 is 10 ..
+      loop x =
+        int x2 = x + 1
+        ...
+        if not stop then loop x2 else x2
+      int x3 = loop x1
+      .. x3 could be some number bigger than 10 ..
+
+   Sometimes, the new variables are called "versions" of the mutable
+   variable 'x'.  We'll use this idea to simulate state in
+   Haskell. (This technique is also used in modern compilers for
+   compiling code that uses mutable state: Static Single Assignment
+   form (SSA) turns each mutable variable into multiple copies, so
+   that old versions can be referred to by a name.)
+
    Let's see this idea in action on a simple example. We'll use the
    datatype of trees again: -}
 
