@@ -36,7 +36,7 @@ module Lec11 where
 
       int x = 5;
        .. some code where x is 5 ..
-      x = 10;
+      x = x + 5;
        .. some code where x is 10 ..
       while (<blah>) {
          x += 1;
