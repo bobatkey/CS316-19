@@ -299,9 +299,9 @@ printLine s = MkPrinting [s] ()
    tells us that it may do some 'Printing': -}
 
 add :: Int -> Int -> Printing Int
-add x y = do
-  printLine ("Adding " ++ show x ++ " and " ++ show y)
-  return (x+y)
+add x y =
+  do printLine ("Adding " ++ show x ++ " and " ++ show y)
+     return (x+y)
 
 
 
