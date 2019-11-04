@@ -18,7 +18,7 @@ ifThenElse True  x y = x
 ifThenElse False x y = y
 (>>) x y = x >>= \_ -> y
 
-{-       Lecture 12 : MONADS AND APPLICATIVES
+{-       Lecture 12 : MONADS
 
    In the last two lectures, we've seen three examples of how to
    simulate side effects with "pure" code in Haskell. In Lecture 10,
@@ -125,7 +125,9 @@ catch op handler =
     Nothing -> handler
     Just x  -> Just x
 
-{-     Part II : 'do' notation
+
+
+{-        Part II : 'do' notation
 
    In the previous two lectures, we've seen that using functions like
    'ifOK', 'andThen' and 'andThenWithPrinting', we can significantly
@@ -198,7 +200,7 @@ lookupAll_v2 kvs (Node l k r) =
 
 
 
-{-     Part III : 'State' is a monad
+{-       Part III : 'State' is a monad
 
    In Lecture 11, we defined a type synonym for "state mutating
    operation that returns a value of type 'a'":
@@ -257,12 +259,23 @@ getAndIncrement =
 
 {-     Part IV : 'Printing' is a monad
 
-   FIXME
+   Just as we made 'State' an instance of 'Monad', we can do the same
+   for 'Printing'. In the last lecture, we defined 'Printing' as a
+   type synonym:
 
--}
+      type Printing a = ([String]), a)
+
+   Again, due to the way that type classes work, we need to define a
+   new datatype. Here, this datatype has one constructor which takes
+   two arguments: the list of strings that have been printed, and the
+   result value: -}
 
 data Printing a = MkPrinting [String] a
   deriving Show
+
+{- The definitions of 'return' and '>>=' are the same as in Lecture 11,
+   except with the uses of 'MkPrinting' instead of the pair type '( ,
+   )': -}
 
 instance Monad Printing where
   return :: a -> Printing a
@@ -274,15 +287,25 @@ instance Monad Printing where
         MkPrinting o2 b = f a
     in MkPrinting (o1 ++ o2) b
 
+{- The primitive operation for 'Printing' is 'printLine', as we wrote in
+    Lecture 11: -}
+
 printLine :: String -> Printing ()
 printLine s = MkPrinting [s] ()
+
+{- Again, because 'Printing' is a 'Monad', we can use the 'do' notation
+   with it. Here is an 'add' function that adds its arguments, but
+   also emits a logging message as it does so. The type signature
+   tells us that it may do some 'Printing': -}
 
 add :: Int -> Int -> Printing Int
 add x y = do
   printLine ("Adding " ++ show x ++ " and " ++ show y)
   return (x+y)
 
-{-     Part V : Writing code that works for all Monads
+
+
+{-      Part V : Writing code that works for all 'Monad's
 
    We've already seen one benefit of declaring the 'Monad' type class:
    we can use 'do' notation to simplify programs that are best written
@@ -302,10 +325,10 @@ add x y = do
 
 mapM :: Monad m => (a -> m b) -> [a] -> m [b]
 mapM f [] = return []
-mapM f (x:xs) = do
-  y  <- f x
-  ys <- mapM f xs
-  return (y:ys)
+mapM f (x:xs) =
+  do y  <- f x
+     ys <- mapM f xs
+     return (y:ys)
 
 {- From the type signature, we can see that 'mapM' is similar to 'map':
 
@@ -340,36 +363,49 @@ readDigits = mapM (\c -> if isDigit c then
 
 mapM_ :: Monad m => (a -> m ()) -> [a] -> m ()
 mapM_ f [] = return ()
-mapM_ f (x:xs) = do
-  f x
-  mapM_ f xs
+mapM_ f (x:xs) =
+  do f x
+     mapM_ f xs
 
-{- FIXME... -}
+{- The underscore at the end of the name is a convention for a variant
+   of a function that returns '()' instead of another data structure.
 
--- To (simulate) print(ing) a list
+   'mapM_' enables us to write something like a 'foreach' loop in
+   languages with pervasive side effects. For instance, to print out
+   each element of a list using the 'Printing' monad, we use 'mapM_'
+   to iterate over the list, instead of doing the recursion ourselves: -}
 
 printList :: Show a => [a] -> Printing ()
 printList = mapM_ (\x -> printLine (show x))
 
--- Swapping arguments makes it look nicer, in some cases
+{- To make this look a bit nicer, the standard library defines a version
+   of 'mapM_' called 'for_' tha swaps the order of the arguments: -}
 
 for_ :: Monad m => [a] -> (a -> m ()) -> m ()
 for_ xs f = mapM_ f xs
 
--- Printing out a list in a 'for loop'
+{- Swapping the order of the arguments enables us to write things like:
+
+     for_ <list of things> (\x -> <thing to do to 'x'>)
+
+   Like printing out the whole list: -}
 
 printList_v2 :: Show a => [a] -> Printing ()
 printList_v2 xs =
-  for_ xs (\x -> do
-              printLine (show x))
+  for_ xs (\x -> printLine (show x))
 
--- Printing out the numbers from 1 to 10:
+{- Or printing out the numbers from 1 to 10 (using the [1..10] notation
+   from Lecture 06): -}
 
 printNumbers :: Printing ()
 printNumbers =
   for_ [1..10] (\i -> printLine (show i))
 
-{- Measuring the size of a list, using the 'State' monad: -}
+{- Using the 'State' monad, we can write functions that we previous
+   wrote using recursion and immutable variables using loops and
+   mutable variables. For example, getting the length of a list by
+   starting a counter at 0, and then adding 1 to the counter for each
+   element of the list: -}
 
 lengthImp :: [a] -> State Int
 lengthImp xs =
@@ -380,7 +416,7 @@ lengthImp xs =
      result <- get
      return result
 
-{- Summing up lists, using the 'State' monad: -}
+{- Or summing up a list by using the mutable state as the running total: -}
 
 sumImp :: [Int] -> State Int
 sumImp xs =
@@ -391,7 +427,9 @@ sumImp xs =
      result <- get
      return result
 
+
+
 {- EXERCISE: This implementation of 'sumImp' can only sum up lists of
-   'Int's what changes would you have to make to 'State' so that you
+   'Int's. What changes would you have to make to 'State' so that you
    can add up lists of 'Double's? Can you make 'State' take the type
    of the state as a parameter? -}

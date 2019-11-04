@@ -21,7 +21,7 @@ Wk Day Date     Event      Prac  Purpose
    Thu 31 Oct   Tutorial   2     T5. Ex2 firefight
    Fri  1 Nov   Lecture          11. programming with side effects
 7  Mon  4 Nov   Lab        2
-   Tue  5 Nov   Lecture          12. monads and applicatives
+   Tue  5 Nov   Lecture          12. monads
    Thu  7 Nov   Tutorial   3     T6. Ex3 unveil
    Fri  8 Nov   Lecture          13. I/O
 8  Mon 11 Nov   Deadline   2     2pm

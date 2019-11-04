@@ -29,7 +29,7 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - [Lecture 09](lectures/Lec09.hs) : Functors and Containers (needs minor updating) ([live version](lectures/Lec09Live.hs))
  - [Lecture 10](lectures/Lec10.hs) : Programming with Exceptions
  - [Lecture 11](lectures/Lec11.hs) : Programming with Side Effects ([live version](lectures/Lec11Live.hs))
- - Lecture 12 : Monads and Applicatives
+ - [Lecture 12](lectures/Lec12.hs) : Monads
  - Lecture 13 : I/O
  - Lecture 14 : Parser Combinators I
  - Lecture 15 : Parser Combinators II
