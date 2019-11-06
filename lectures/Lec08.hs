@@ -324,7 +324,7 @@ data Tree a
 
       1. The _result_ of processing the left subtree
       2. The data value stored at this node
-      3. The _reslut_ of processing the right subtree
+      3. The _result_ of processing the right subtree
 
    and it returns the result of processing the current node.
 
