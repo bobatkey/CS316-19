@@ -1,0 +1,4 @@
+(plus Z y)     = y
+(plus (S x) y) = (S (plus x y))
+
+(main) = (plus (S (S Z)) (S (S Z)))
