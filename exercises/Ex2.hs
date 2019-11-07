@@ -704,6 +704,7 @@ instance Semigroup RGBA where
    is the completely transparent colour: -}
 instance Monoid RGBA where
   mempty = MkRGBA 0 0 0 0
+  mappend = (<>)
   {- By default, mappend = (<>) -}
 
 
