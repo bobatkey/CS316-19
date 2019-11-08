@@ -14,7 +14,7 @@ import System.IO          (openFile, hPutChar, hGetChar,
    Since Lecture 10, we've seen how to simulate side effects in
    Haskell. But what if we really want to do some side effects?
 
-   A famous philosopher once wrote:
+   A great philosopher once wrote:
 
      The philosophers have only interpreted the world, in various
      ways. The point, however, is to change it.
