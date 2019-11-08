@@ -218,9 +218,11 @@ getTwoChars =
 readLine :: IO String
 readLine =
   do c <- getChar
-     if c == '\n' then return []
-     else do cs <- readLine
-             return (c:cs)
+     if c == '\n' then
+       return []
+     else
+       do cs <- readLine
+          return (c:cs)
 
 {- The following function does the same thing, except that it uses an
    accumulator to build up the list of characters from the input, and
@@ -258,7 +260,8 @@ program =
      Bob
      Hello Bob!
 
-   A function that repeatedly reads input until it gets an empty line: -}
+   A function that repeatedly reads input until it gets an empty line,
+   outputing non-empty lines in CAPITALS: -}
 
 capsLockSimulator :: IO ()
 capsLockSimulator =
@@ -367,6 +370,7 @@ avg xs =
    when doing I/O. Another answer is that Haskell also has another
    built-in monad, called 'ST', for doing stateful computations that
    do not do any IO. -}
+
 
 
 {-    Part III : Input and Output to Files
