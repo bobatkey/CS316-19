@@ -46,22 +46,39 @@ import System.IO          (openFile, hPutChar, hGetChar,
    But having such a function in Haskell would spoil our ability to
    reason by replacing equals by equals. For example, in the code:
 
-      let () = putChar 'x'
-          () = putChar 'y'
-      in 5
+      (putChar 'x', putChar 'x')
 
-   We should be able to think: the code doesn't use the result of
-   either 'putChar', so it should be safe to remove it. But this would
-   remove the side effects we wanted from the program!
+   We should be able to think: there is duplicated code here, we
+   should be able to pull it out into a single definition:
+
+      let x = putChar 'x'
+      in (x,x)
+
+   But now if we read 'putChar 'x'' as actually doing the side effect
+   of outputting a character, we have two different programs. The
+   first outputs two 'x's, and the second outputs only one.
 
    In Haskell, 'putChar' has the type:
 
        putChar :: Char -> IO ()
 
    That is, 'putChar' doesn't actually do the printing when you call
-   it. Instead, it returns an "IO action". Conceptually, we can think
-   of such "actions" as being in a datatype similar to the 'Process'
-   type from Exercise 3: -}
+   it. Instead, it returns an "IO action". So the following code:
+
+       (putChar 'x', putChar 'x')
+
+   doesn't output two characters, instead it returns a pair of two IO
+   actions, that, when they are executed, output 'x's. Because
+   'putChar 'x'' is an IO action, not an instruction to output, the
+   rewritten code:
+
+       let x = putChar 'x'
+       in (x,x)
+
+   Has exactly the same meaning.
+
+   Conceptually, we can think of such "actions" as being in a datatype
+   similar to the 'Process' type from Exercise 3: -}
 
 data IO' a
   = End a
@@ -82,19 +99,19 @@ data IO' a
    In summary, Haskell remains a "pure" language, and allows side
    effects by:
 
-     1. Having a special type 'IO a' of I/O actions that return values
-        of type 'a'.
+     1. Having a special type 'IO a' of I/O actions that compute
+        values of type 'a'.
 
      2. Using the 'Monad' interface to combine individual 'IO a'
         actions into sequences.
 
-     3. Actually running an 'IO a' action happens either by typing its
-        name at the prompt in GHCi, or in a standalone program by
+     3. Actually executing an 'IO a' action happens either by typing
+        its name at the prompt in GHCi, or in a standalone program by
         being whatever action is defined to be the 'main' value.
 
    In this lecture, we'll look at some of the basic operations that
    the IO monad has, and how they can be put together to write
-   interesting programs that interact with the outside world. -}
+   programs that interact with the outside world. -}
 
 
 {-    Part I : Output and Input
