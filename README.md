@@ -35,7 +35,7 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - Lecture 15 : Parser Combinators II
  - Lecture 16 : Visiting and Traversing Containers
  - Lecture 17 : Lazy Evaluation
- - Lecture 18 :
+ - Lecture 18 : *no lecture*
  - Lecture 19 : Parallelism
  - Lecture 20 : Concurrency
  - Lecture 21 : CS410 Propaganda
