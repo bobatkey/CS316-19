@@ -31,7 +31,7 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - [Lecture 11](lectures/Lec11.hs) : Programming with Side Effects ([live version](lectures/Lec11Live.hs))
  - [Lecture 12](lectures/Lec12.hs) : Monads ([live version](lectures/Lec12Live.hs))
  - [Lecture 13](lectures/Lec13.hs) : I/O ([live version](lectures/Lec13Live.hs))
- - [Lecture 14](lectures/Lec14.hs) : Parser Combinators I
+ - [Lecture 14](lectures/Lec14.hs) : Parser Combinators I ([live version](lectures/Lec14Live.hs))
  - Lecture 15 : Parser Combinators II
  - Lecture 16 : Visiting and Traversing Containers
  - Lecture 17 : Lazy Evaluation
