@@ -587,8 +587,7 @@ data Exp
      <factor> ::= <base> * <factor>
                 | <base>
 
-     <base>   ::= <varname>
-                | <number>
+     <base>   ::= <number>
                 | ( <exp> )
 
    We can now almost directly translate this into our parsing
