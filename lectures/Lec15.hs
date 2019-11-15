@@ -518,16 +518,17 @@ testJSONString =
 
    Using the IO monad's 'readFile' function, we can now write a
    function that reads JSON data from a file. This parser is very
-   strict: it does not allow any leading whitespace or anything after
-   the JSON value. Can you change it so it is more liberal? -}
+   strict: it does not allow any leading whitespace or and always
+   requires a newline character after the JSON value. Can you change
+   it so it is more liberal? -}
 
 readJSON :: FilePath -> IO (Maybe JSON)
 readJSON path =
   do fileContents <- readFile path
      case runParser parseJSON fileContents of
-       Just ("", json) -> return (Just json)
-       Nothing         -> return Nothing
-       Just _          -> return Nothing
+       Just ("\n", json) -> return (Just json)
+       Nothing           -> return Nothing
+       Just _            -> return Nothing
 
 {-      Part III : Parsing arithmetic expressions
 
