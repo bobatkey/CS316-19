@@ -2,6 +2,9 @@ module RecSchemesQuestions where
 
 import Prelude hiding (sum, foldr)
 
+{- Some questions (and their solutions) on Recursion Schemes
+   (i.e. folds) from Lecture 08. -}
+
 {----------------------------------------------------------------------}
 foldr :: (a -> b -> b) -> b -> [a] -> b
 foldr f a []     = a
