@@ -23,14 +23,14 @@ Wk Day Date     Event      Prac  Purpose
 7  Mon  4 Nov   Lab        2
    Tue  5 Nov   Lecture          12. monads
    Thu  7 Nov   Tutorial   3     T6. Ex3 unveil
-   Fri  8 Nov   Lecture          13. I/O
+   Fri  8 Nov   Lecture          13. input/output
 8  Mon 11 Nov   Deadline   2     2pm
                 Lab-Test   2     Ex2 test
-   Tue 12 Nov   Lecture          14. Parser Combinators I
+   Tue 12 Nov   Lecture          14. parser Combinators I
    Thu 14 Nov   Tutorial   2     T7. Ex2 autopsy
-   Fri 15 Nov   Lecture          15. Parser Combinators II
+   Fri 15 Nov   Lecture          15. parser Combinators II
 9  Mon 18 Nov   Lab        3
-   Tue 19 Nov   Lecture          16. visiting and traversing containers
+   Tue 19 Nov   Lecture          16. applicative functors
    Thu 21 Nov   Tutorial   3     T8. Ex3 firefight
    Fri 22 Nov   Lecture          17. infinite data and processes
 10 Mon 25 Nov   Lab        3

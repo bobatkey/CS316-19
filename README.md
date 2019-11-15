@@ -33,7 +33,7 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - [Lecture 13](lectures/Lec13.hs) : I/O ([live version](lectures/Lec13Live.hs))
  - [Lecture 14](lectures/Lec14.hs) : Parser Combinators I ([live version](lectures/Lec14Live.hs))
  - [Lecture 15](lectures/Lec15.hs) : Parser Combinators II ([live version](lectures/Lec15Live.hs))
- - Lecture 16 : Visiting and Traversing Containers
+ - Lecture 16 : Applicative Functors
  - Lecture 17 : Lazy Evaluation
  - Lecture 18 : *no lecture*
  - Lecture 19 : Parallelism
