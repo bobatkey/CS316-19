@@ -1081,7 +1081,7 @@ checkProgram prog =
 -}
 
 hasMain :: Program -> ErrorOr ()
-hasMain = return () -- replace this
+hasMain prog = return () -- replace this
 
 {- 2 MARKS -}
 
@@ -1104,7 +1104,7 @@ hasMain = return () -- replace this
 -}
 
 scopeCheck :: Program -> ErrorOr ()
-scopeCheck = return () -- replace this
+scopeCheck prog = return () -- replace this
 
 {- 5 MARKS -}
 
