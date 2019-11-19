@@ -14,7 +14,7 @@ The course lecturer is **Bob Atkey**. Office LT1305 [robert.atkey@strath.ac.uk](
 
 ## Lectures
 
-Lectures are at **13:00 Tuesdays** in JA501 and **11am Fridays** in RC447.
+Lectures are at **13:00 Tuesdays** in RC540 and **11am Fridays** in RC447.
 
 Most of the lectures involve me doing live coding with explanations of what I am doing. This repository contains cleaned up versions of the live coding, interspersed with commentary.
 
@@ -34,7 +34,7 @@ Most of the lectures involve me doing live coding with explanations of what I am
  - [Lecture 14](lectures/Lec14.hs) : Parser Combinators I ([live version](lectures/Lec14Live.hs))
  - [Lecture 15](lectures/Lec15.hs) : Parser Combinators II ([live version](lectures/Lec15Live.hs))
  - Lecture 16 : Applicative Functors ([live version](lectures/Lec16Live.hs))
- - [Lecture 17](lectures/Lec17.hs) : Lazy Evaluation
+ - [Lecture 17](lectures/Lec17.hs) : Lazy Evaluation and Infinite Data
  - Lecture 18 : *no lecture*
  - Lecture 19 : Parallelism
  - Lecture 20 : Concurrency
