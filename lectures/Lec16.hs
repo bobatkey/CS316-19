@@ -13,27 +13,54 @@ ifThenElse True  x y = x
 ifThenElse False x y = y
 (>>) x y = x >>= \_ -> y
 
-{-     LECTURE 16 : FUNCTORS, APPLICATIVE FUNCTORS, and MONADS
+{-     LECTURE 16 : MONADS, DATA DEPENDENCIES, AND APPLICATIVES
 
-   FIXME: introduction: abstracting patterns of data dependency
-   between actions. Leading up to being able to execute stuff in
-   parallel if need be (Haxl).
-
--}
-
-
-{-     Part I : Sequences of Actions
-
--}
+   Since Lecture 12, we've been using the 'Monad' typeclass as a
+   general interface to ways of organising side effecting
+   computations, and passing the result of a side effecting
+   computation on to another. Here is the 'Monad' definition again: -}
 
 class Monad m where
   return :: a -> m a
   (>>=)  :: m a -> (a -> m b) -> m b
 
-{- A common pattern, executing a sequence of actions and then applying a
-   function at the end. For example, traversing a list, performing
-   some action for every element is performed by the 'mapM' function
-   we saw in Lecture 12: -}
+{- The 'Monad' type class attempts to capture the idea that values of
+   type 'm a' represent side effecting operations that result in
+   values of type 'a'. To fulfil the 'Monad' interface, a type
+   constructor 'm' must implement a 'return' function, that generates
+   a "do nothing" operation, and a bind function '>>=', that sequences
+   two operations.
+
+   A key point about the '>>=' function is that it allows for the
+   second operation to depend on the value returned by the first. This
+   is because a function of type 'a -> m b' can decide what side
+   effecting operation it wants to do by looking at the 'a' value. We
+   say that there is a data dependency between the two computations.
+
+   In this lecture, we'll look at a different interface to side
+   effecting computations that still allows computations to be
+   sequenced, but disallows data dependencies between them. This
+   interface will be called 'Applicative', after an old name for
+   Functional Programming ("Applicative Programming", because it is
+   based around the idea of applying functions).
+
+   Applicatives will be useful in two ways. First, it makes some programs
+   a bit nicer to write, making their structure more clear. Second,
+   disallowing data dependencies means that it more obvious when
+   certain operations can be run in parallel. This second advantage
+   has been put to use in the Haxl library developed by Facebook. We
+   will develop a toy version of Haxl at the end of this lecture. -}
+
+
+
+{-     Part I : Sequences of Actions
+
+   To introduce the idea of Applicatives, we first look at a common
+   pattern when using monads. Often, we will execute a sequence of
+   actions, none of which depend on the results of the earlier ones,
+   and then we apply a function to all the results at the end. For
+   example, traversing a list, performing some action for every
+   element is performed by the 'mapM' function we saw in Lecture 12: -}
 
 mapM :: Monad m => (a -> m b) -> [a] -> m [b]
 mapM f [] =
@@ -67,8 +94,6 @@ mapMTree f (Node l x r) =
           a3 <- action3
           ...
           return (f a1 a2 a3 ...)
-
-   which is very common.
 
    We often have a a sequence of actions to perform, none of which
    depend on the results of the previous action. The final result is
@@ -128,9 +153,14 @@ lift3 f action1 action2 action3 =
 
 {- And so on for 'lift4', 'lift5', ...
 
+   (notice how the 'lift1' function has a similar type signature to
+   'mapPicture' from exercise 2, and 'lift2' has a similar type
+   signature to 'mapPicture2'.)
+
    We'd rather not have a special function for each number of
    arguments that we want to lift. Is there a way of defining a small
    number of functions that can be chained together to produce the
+   same effect?
 
    Let's look at the way that function application works in Haskell in
    more detail. Back in Lecture 05, we learned that multiargument
@@ -195,12 +225,39 @@ mapply mf ma =
    value.
 
    The difference between this function and the 'lift' functions we
-   wrote before is that it 
+   wrote before is that the function argument is also the result of
+   some action. This will allow us to chain together several uses of
+   'mapply' to reach any number of arguments.
 
--}
+   (Notice that 'mapply' has a similar type signature to the
+   'pictureApply' function from Exercise 2.)
 
--- Now we don't have to write all the 'lift' functions
--- individually. We can write the original functions like this:
+   We can see how 'mapply' works by using it to write the 'lift'
+   functions from earlier: -}
+
+lift1_v2 :: Monad m => (a -> b) -> m a -> m b
+lift1_v2 f action1 =
+  return f `mapply` action1
+
+lift2_v2 :: Monad m => (a -> b -> c) -> m a -> m b -> m c
+lift2_v2 f action1 action2 =
+  return f `mapply` action1 `mapply` action2
+
+lift3_v2 :: Monad m => (a -> b -> c -> d) -> m a -> m b -> m c -> m d
+lift3_v2 f action1 action2 action3 =
+  return f `mapply` action1 `mapply` action2 `mapply` action3
+
+{- Each one works in the same way: it uses 'return' to lift the function
+   'f' up into the monad, and then uses 'mapply' to repeatedly apply
+   it to arguments. 'mapply' is like a version of function application
+   that allows side effects to happen at the same time.
+
+   We can now rewrite 'mapM' and 'mapMTree' to use 'mapply' instead,
+   making their structure a bit more explicit. They both work by
+   applying the appropriate constructor ('(:)' for lists, 'Node' for
+   trees) to the results of processing the sub-lists/trees and
+   data. Using 'mapply' instead of normal function application allows
+   the side effects to be processed correctly: -}
 
 mapM_v2 :: Monad m => (a -> m b) -> [a] -> m [b]
 mapM_v2 f [] =
@@ -214,49 +271,81 @@ mapMTree_v2 f Leaf =
 mapMTree_v2 f (Node l x r) =
   return Node `mapply` mapMTree_v2 f l `mapply` f x `mapply` mapMTree_v2 f r
 
-{- Idea: it looks the same as the normal map, except that we have to put
-   in some extra noise to handle the stuff happening behind the scenes. -}
+{- In both cases, the idea is that the function looks the same as the
+   normal 'map' / 'mapTree', except that we have to put in some extra
+   noise to handle the side effects. -}
 
 
-{-   Part III : Applicative, a New Typeclass
+{-     Part II : Applicative, a New Typeclass
 
-   FIXME: so called, because we are doing 'applicative' programming.
+   Often, when we want to do programming with side effects, it
+   suffices to use only 'return' and 'mapply'. This was first observed
+   by Conor McBride and Ross Paterson in their paper "Applicative
+   Programming with Effects":
 
-      http://www.staff.city.ac.uk/~ross/papers/Applicative.pdf
--}
+        http://www.staff.city.ac.uk/~ross/papers/Applicative.pdf
+
+   They proposed an interface to side effects that is based around
+   only a 'return'-like function and a 'mapply'-like function. The
+   names they proposed were 'pure' and '<*>' (pronounced "apply"). The
+   type class that puts these two together is called 'Applicative'
+   (after "Applicative Programming", as we mentioned above): -}
+
+class Functor f => Applicative f where
+  pure  :: a -> f a
+  (<*>) :: f (a -> b) -> f a -> f b
+
+{- The 'Functor f =>' bit means that every 'Applicative' implementation
+   must also have a 'Functor' implementation, where 'Functor' is the
+   type class for container-like things that we introduced in Lecture
+   09: -}
 
 class Functor f where
   fmap :: (a -> b) -> f a -> f b
 
-class Functor f => Applicative f where
-  pure :: a -> f a
-  (<*>) :: f (a -> b) -> f a -> f b
+{- We can always define an 'fmap' for every 'Applicative', because it is
+   the same as the 'lift1' function we saw above. So we could define:
 
--- Useful for parsing
+      fmap f action = pure f <*> action
 
--- Every Applicative is a Functor
+   But the design of the standard library allows us to write a custom
+   implementation of 'fmap' if we need to, in case it might be more
+   efficient.
 
--- Every Monad is an Applicative and a Functor
+   As we have seen with the definition of 'mapply', every 'Monad' is
+   an 'Applicative' by defining 'pure' to be 'return' and '<*>' to be
+   'mapply'. The official definition of 'Monad' in the standard
+   library is not quite like how we defined it above. It requires an
+   implementation of 'Applicative', just as 'Applicative' requires an
+   implementation of 'Functor':
 
--- If we have a Monad and an Applicative implementation for the same
--- type, then it must be the case that (<*>) "acts like" 'mapply'.
+      class Applicative m => Monad m where
+        return :: a -> m a
+        (>>=)  :: m a -> (a -> m b) -> m b
 
+   There is also a convention that if a type constructor has a 'Monad'
+   interface, then the 'Applicative' interface should act as if 'pure'
+   is the same as 'return', and '<*>' is the same as 'mapply'.
 
-
--- Good for writing traversals of structures
-
-
-
-{- Not every Applicative is a Monad: Triples
-
-   bit like pictures of a fixed size.
--}
+   This convention means that there are useful 'Applicative's that do
+   not have matching 'Monad' implementations. For example, the type of
+   triples: -}
 
 data Triple a = MkTriple a a a
+
+{- We can think of a value of 'Triple a' as like the pictures from
+   Exercise 2, except with only three points.
+
+   Defining a 'Functor' implementation is a matter of applying a
+   single function to every point (like 'mapPicture'): -}
 
 instance Functor Triple where
   fmap f (MkTriple a1 a2 a3) =
     MkTriple (f a1) (f a2) (f a3)
+
+{- Defining an 'Applicative' implementation has two operations: 'pure'
+   takes a single value and puts it in every point, and '<*>' takes
+   the function at each point and applies to the value at that point: -}
 
 instance Applicative Triple where
   pure :: a -> Triple a
@@ -267,21 +356,52 @@ instance Applicative Triple where
   MkTriple f1 f2 f3 <*> MkTriple a1 a2 a3 =
     MkTriple (f1 a1) (f2 a2) (f3 a3)
 
-instance Monad Triple where
-  return a =
-    MkTriple a a a
-
-  MkTriple a1 a2 a3 >>= f =
-    undefined -- which 'a' do we use?
-
-{- EXERCISE: there is a monad implementation for Triple, but it doesn't
-   have the property that the applicative implementation agrees with it. -}
+{- EXERCISE: there is a possible monad implementation for Triple, but it
+      doesn't have the property that the applicative implementation
+      agrees with it. Write the monad implementation, and show that
+      'mapply' for it doesn't give the same answer as the '<*>'
+      defined here. -}
 
 
+{- We have seen that the 'Applicative' interface is all we need to
+   define functions that perform traversals of data structures like
+   lists and trees. Writing the same functions using the 'Applicative'
+   interface is even more concise: -}
 
-{-   Part IV : Data Dependencies and Parallelism
+mapM_v2 :: Applicative f => (a -> f b) -> [a] -> f [b]
+mapM_v2 f []     = pure []
+mapM_v2 f (x:xs) = pure (:) <*> f x <*> mapM_v2 f xs
 
-   What use is the Applicative Typeclass?
+mapMTree_v2 :: Applicative f => (a -> f b) -> Tree a -> f (Tree b)
+mapMTree_v2 f Leaf         = pure Leaf
+mapMTree_v2 f (Node l x r) = pure Node <*> mapMTree_v2 f l <*> f x <*> mapMTree_v2 f r
+
+{- Also, these functions now work for any 'Applicative', not just any
+   'Monad'. As we saw above, there are potentially useful types that
+   are 'Applicative', but not 'Monad'. The 'Picture' type from
+   Exercise 2 is another example.
+
+   'Applicatives' are also useful for parsing. The example parser we
+   saw above can now be written as:
+
+       pure (\fieldname _ value -> (fieldname, value))
+          <*> parseStringLiteral
+          <*> parseLiteralChar ':'
+          <*> parseItem
+
+   which makes the separation of the "things to be recognised" and the
+   "way of combining them" more clear.
+
+   It is also possible to give an alternative implementation of the
+   'Parser' type from Lecture 14 that exploits the lack of data
+   dependency in the 'Applicative' interface to make parsing more
+   efficient by having a fixed grammar that can be optimised. We'll
+   not look into this in this course. Instead, we'll look at a way
+   that the 'Applicative' interface can be used to make data retrieval
+   operations happen in parallel. -}
+
+
+{-   Part III : Data Dependencies and Parallelism
 
    Facebook's Haxl:
 
@@ -307,33 +427,49 @@ data Fetch a
   = Done a
   | Blocked [Request] ([Response] -> Fetch a)
 
--- Similar to the 'Process' type!
+-- Similar to the 'Process' type from Exercise 2!
 
 makeRequest :: Request -> Fetch Response
 makeRequest request =
   Blocked [request] (\[response] -> Done response)
 
 instance Functor Fetch where
+  fmap :: (a -> b) -> Fetch a -> Fetch b
   fmap f (Done a) =
     Done (f a)
   fmap f (Blocked requests k) =
     Blocked requests (\responses -> fmap f (k responses))
 
 instance Monad Fetch where
+  return :: a -> Fetch a
   return x = Done x
 
+  (>>=) :: Fetch a -> (a -> Fetch b) -> Fetch b
   Done a >>= f =
     f a
   Blocked requests k >>= f =
     Blocked requests (\responses -> k responses >>= f)
+
+-- sequences the requests:
+
+-- makeRequest "A" >>= \a -> makeRequest "B" >>= \b -> return (a,b)
+--
+--     Blocked ["A"] (\[response] -> Done response)
+-- >>= \a -> Blocked ["B"] (\[response] -> Done response)
+-- >>= \b -> return (a,b)
+--
+-- Blocked ["A"] (\[a] -> Blocked "B" (\[b] -> Done (a,b)))
+
 
 
 
 -- The applicative version allows requests in parallel.
 
 instance Applicative Fetch where
+  pure :: a -> Fetch a
   pure x = Done x
 
+  (<*>) :: Fetch (a -> b) -> Fetch a -> Fetch b
   Done f               <*> Done a =
     Done (f a)
 
@@ -350,3 +486,11 @@ instance Applicative Fetch where
              responses2 = drop (length requests1) responses
          in
          k1 responses1 <*> k2 responses2)
+
+-- batches requests to happen in parallel.
+
+-- pure (\a b -> (a,b)) <*> makeRequest "A" <*> makeRequest "B"
+--
+--  ...
+--
+-- Blocked ["A","B"] (\[a,b] -> Done (a,b))
