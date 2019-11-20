@@ -13,12 +13,13 @@ ifThenElse True  x y = x
 ifThenElse False x y = y
 (>>) x y = x >>= \_ -> y
 
+
+
 {-     LECTURE 16 : MONADS, DATA DEPENDENCIES, AND APPLICATIVES
 
    Since Lecture 12, we've been using the 'Monad' typeclass as a
-   general interface to ways of organising side effecting
-   computations, and passing the result of a side effecting
-   computation on to another. Here is the 'Monad' definition again: -}
+   general interface for organising side effecting computations. Here
+   is the 'Monad' definition again: -}
 
 class Monad m where
   return :: a -> m a
@@ -35,21 +36,23 @@ class Monad m where
    second operation to depend on the value returned by the first. This
    is because a function of type 'a -> m b' can decide what side
    effecting operation it wants to do by looking at the 'a' value. We
-   say that there is a data dependency between the two computations.
+   say that there is a potential data dependency between the two
+   computations.
 
-   In this lecture, we'll look at a different interface to side
+   In this lecture, we'll look at an alternative interface to side
    effecting computations that still allows computations to be
    sequenced, but disallows data dependencies between them. This
    interface will be called 'Applicative', after an old name for
    Functional Programming ("Applicative Programming", because it is
    based around the idea of applying functions).
 
-   Applicatives will be useful in two ways. First, it makes some programs
-   a bit nicer to write, making their structure more clear. Second,
-   disallowing data dependencies means that it more obvious when
-   certain operations can be run in parallel. This second advantage
-   has been put to use in the Haxl library developed by Facebook. We
-   will develop a toy version of Haxl at the end of this lecture. -}
+   Applicatives will be useful in two ways. First, it makes some
+   programs a bit nicer to write, making their structure more
+   clear. Second, disallowing data dependencies means that it more
+   obvious when certain operations can be run in parallel. This second
+   advantage has been put to use in the Haxl library developed by
+   Facebook. We will develop a toy version of Haxl at the end of this
+   lecture. -}
 
 
 
@@ -71,20 +74,20 @@ mapM f (x:xs) =
      return (x':xs')
 
 {- The analogous function for traversing 'Tree's, which I'll call
-   'mapMTree', looks similar: -}
+   'mapTreeM', looks similar: -}
 
 data Tree a
   = Leaf
   | Node (Tree a) a (Tree a)
   deriving Show
 
-mapMTree :: Monad m => (a -> m b) -> Tree a -> m (Tree b)
-mapMTree f Leaf =
+mapTreeM :: Monad m => (a -> m b) -> Tree a -> m (Tree b)
+mapTreeM f Leaf =
   return Leaf
-mapMTree f (Node l x r) =
-  do l' <- mapMTree f l
+mapTreeM f (Node l x r) =
+  do l' <- mapTreeM f l
      x' <- f x
-     r' <- mapMTree f r
+     r' <- mapTreeM f r
      return (Node l' x' r')
 
 {- These functions both follow the pattern of:
@@ -252,7 +255,7 @@ lift3_v2 f action1 action2 action3 =
    it to arguments. 'mapply' is like a version of function application
    that allows side effects to happen at the same time.
 
-   We can now rewrite 'mapM' and 'mapMTree' to use 'mapply' instead,
+   We can now rewrite 'mapM' and 'mapTreeM' to use 'mapply' instead,
    making their structure a bit more explicit. They both work by
    applying the appropriate constructor ('(:)' for lists, 'Node' for
    trees) to the results of processing the sub-lists/trees and
@@ -265,11 +268,11 @@ mapM_v2 f [] =
 mapM_v2 f (x:xs) =
   return (:) `mapply` f x `mapply` mapM_v2 f xs
 
-mapMTree_v2 :: Monad m => (a -> m b) -> Tree a -> m (Tree b)
-mapMTree_v2 f Leaf =
+mapTreeM_v2 :: Monad m => (a -> m b) -> Tree a -> m (Tree b)
+mapTreeM_v2 f Leaf =
   return Leaf
-mapMTree_v2 f (Node l x r) =
-  return Node `mapply` mapMTree_v2 f l `mapply` f x `mapply` mapMTree_v2 f r
+mapTreeM_v2 f (Node l x r) =
+  return Node `mapply` mapTreeM_v2 f l `mapply` f x `mapply` mapTreeM_v2 f r
 
 {- In both cases, the idea is that the function looks the same as the
    normal 'map' / 'mapTree', except that we have to put in some extra
@@ -279,17 +282,17 @@ mapMTree_v2 f (Node l x r) =
 {-     Part II : Applicative, a New Typeclass
 
    Often, when we want to do programming with side effects, it
-   suffices to use only 'return' and 'mapply'. This was first observed
-   by Conor McBride and Ross Paterson in their paper "Applicative
-   Programming with Effects":
+   suffices to use only 'return' and 'mapply', like in 'mapM' and
+   'mapTreeM'. This was first observed by Conor McBride and Ross
+   Paterson in their paper "Applicative Programming with Effects":
 
-        http://www.staff.city.ac.uk/~ross/papers/Applicative.pdf
+      http://www.staff.city.ac.uk/~ross/papers/Applicative.pdf
 
    They proposed an interface to side effects that is based around
    only a 'return'-like function and a 'mapply'-like function. The
    names they proposed were 'pure' and '<*>' (pronounced "apply"). The
    type class that puts these two together is called 'Applicative'
-   (after "Applicative Programming", as we mentioned above): -}
+   (after "Applicative Programming", as mentioned above): -}
 
 class Functor f => Applicative f where
   pure  :: a -> f a
@@ -332,6 +335,7 @@ class Functor f where
    triples: -}
 
 data Triple a = MkTriple a a a
+  deriving Show
 
 {- We can think of a value of 'Triple a' as like the pictures from
    Exercise 2, except with only three points.
@@ -368,18 +372,18 @@ instance Applicative Triple where
    lists and trees. Writing the same functions using the 'Applicative'
    interface is even more concise: -}
 
-mapM_v2 :: Applicative f => (a -> f b) -> [a] -> f [b]
-mapM_v2 f []     = pure []
-mapM_v2 f (x:xs) = pure (:) <*> f x <*> mapM_v2 f xs
+mapA :: Applicative f => (a -> f b) -> [a] -> f [b]
+mapA f []     = pure []
+mapA f (x:xs) = pure (:) <*> f x <*> mapA f xs
 
-mapMTree_v2 :: Applicative f => (a -> f b) -> Tree a -> f (Tree b)
-mapMTree_v2 f Leaf         = pure Leaf
-mapMTree_v2 f (Node l x r) = pure Node <*> mapMTree_v2 f l <*> f x <*> mapMTree_v2 f r
+mapTreeA :: Applicative f => (a -> f b) -> Tree a -> f (Tree b)
+mapTreeA f Leaf         = pure Leaf
+mapTreeA f (Node l x r) = pure Node <*> mapTreeA f l <*> f x <*> mapTreeA f r
 
 {- Also, these functions now work for any 'Applicative', not just any
-   'Monad'. As we saw above, there are potentially useful types that
-   are 'Applicative', but not 'Monad'. The 'Picture' type from
-   Exercise 2 is another example.
+   'Monad'. As we saw with the 'Triple' example, there are potentially
+   useful types that are 'Applicative', but not 'Monad'. The 'Picture'
+   type from Exercise 2 is another example.
 
    'Applicatives' are also useful for parsing. The example parser we
    saw above can now be written as:
@@ -393,52 +397,120 @@ mapMTree_v2 f (Node l x r) = pure Node <*> mapMTree_v2 f l <*> f x <*> mapMTree_
    "way of combining them" more clear.
 
    It is also possible to give an alternative implementation of the
-   'Parser' type from Lecture 14 that exploits the lack of data
-   dependency in the 'Applicative' interface to make parsing more
+   'Parser' type from Lecture 14 that exploits the denial of data
+   dependency by the 'Applicative' interface to make parsing more
    efficient by having a fixed grammar that can be optimised. We'll
    not look into this in this course. Instead, we'll look at a way
    that the 'Applicative' interface can be used to make data retrieval
    operations happen in parallel. -}
 
 
-{-   Part III : Data Dependencies and Parallelism
+{-       Part III : Data Dependencies and Parallelism
 
-   Facebook's Haxl:
+   As we mentioned above, the key difference between the 'Monad' and
+   'Applicative' interfaces is whether or not the second operation to
+   be performed can depend on the result of the first. In the 'Monad'
+   "bind" function:
 
-     - https://github.com/facebook/Haxl
-     - http://simonmar.github.io/bib/papers/haxl-icfp14.pdf
+      (>>=) :: m a -> (a -> m b) -> m b
 
-   Here follows a toy version of Haxl.
+   the second operation is a function 'a -> m b', which can inspect
+   the 'a' value and return any operation it likes. In the
+   'Applicative' "apply" function:
 
-   Basic idea is that we can exploit the lack of data dependencies in
-   a sequence like:
+      (<*>) :: f (a -> b) -> f a -> f b
 
-      do resp1 <- request1
-         resp2 <- request2
-         resp3 <- request3
-         return (f resp1 resp2 resp3)
+   The two operations are fixed from the start, only the final 'b'
+   value can depend on the results of the operations. This lack of
+   data dependency can be exploited to reveal opportunities for
+   parallelism: if the two operations given to '<*>' can't depend on
+   each other, then they could be executed in parallel.
 
-   to do 'request1', 'request2', and 'request3' in parallel. -}
+   Facebook's Haxl library is an implementation of this idea. Haxl is
+   used within Facebook to implement high performance data fetching
+   tasks. Generating a webpage often requires fetching data from a
+   multitude of independent backend data services. Performing these
+   fetches in parallel can drastically lower the response time of a
+   website.
+
+   Haxl's code is available on GitHub:
+
+      https://github.com/facebook/Haxl
+
+   and there is paper describing the idea, evaluating it on some
+   benchmarks:
+
+      http://simonmar.github.io/bib/papers/haxl-icfp14.pdf
+
+   The paper is very readable and is at about the level of Haskell
+   that you're at in this course. The start of the paper describes a
+   toy version of Haxl to get the idea across. Here I'll describe a
+   slightly different toy version that is just enough not-toy to be
+   able to implement a real concurrent fetching implementation for it
+   in Lecture 20.
+
+   For our toy version, we'll just represent requests to and responses
+   from backend data services as 'String's: -}
 
 type Request = String
 type Response = String
+
+{- The core data structure is 'Fetch', which represents a sequence of
+   batches of requests to be made: -}
 
 data Fetch a
   = Done a
   | Blocked [Request] ([Response] -> Fetch a)
 
--- Similar to the 'Process' type from Exercise 2!
+{- A 'Fetch a' value is either:
+
+    1. 'Done x', representing a job that has completed and returned
+       the value 'x'; or
+
+    2. 'Blocked requests k' representing a job that is blocked on a
+       list of 'requests'. Once these requests have been fulfilled,
+       the continuation 'k' can be applied to the responses, yielding
+       the rest of the job.
+
+   Notice that 'Fetch' is very similar to the 'Process' type in
+   Exercise 2. There are two key differences:
+
+    1. The 'Process' type had separate 'Input' and 'Output'
+       constructors, which have been merged here -- every 'Output' is
+       immediately followed by an 'Input'.
+
+    2. The "outputs" and "inputs" are lists of requests and responses,
+       because we want to record which requests can be run in
+       parallel.
+
+   To make individual requests, 'Fetch' has a primitive operation
+   'makeRequest', which takes a 'Request' and returns a 'Fetch' job
+   that will yield a 'Response': -}
 
 makeRequest :: Request -> Fetch Response
 makeRequest request =
   Blocked [request] (\[response] -> Done response)
 
-instance Functor Fetch where
-  fmap :: (a -> b) -> Fetch a -> Fetch b
-  fmap f (Done a) =
-    Done (f a)
-  fmap f (Blocked requests k) =
-    Blocked requests (\responses -> fmap f (k responses))
+{- To see how 'Fetch' works we'll define a custom 'Show' implementation
+   for it. We can't in general print out functions, but we can print
+   out the first thing that a 'Fetch' job will do. Either it is
+   'Done', or it is 'Blocked' on a list of requests: -}
+
+instance Show a => Show (Fetch a) where
+  show (Done a)             = "(Done " ++ show a ++ ")"
+  show (Blocked requests _) = "(Blocked " ++ show requests ++ " <waiting>)"
+
+{- For example, 'makeRequest "A"' generates a 'Fetch' job that is
+   blocked on the request "A":
+
+      > makeRequest "A"
+      (Blocked ["A"] <waiting>)
+
+   We'll now define a 'Monad' implementation for 'Fetch'. The 'return'
+   generates 'Fetch' jobs that are already 'Done'. The "bind" ('>>=')
+   sequences 'Fetch' jobs one after the other, in a similar way to the
+   'sequ' function in Exercise 2 sequences 'Process'es one after the
+   other. -}
 
 instance Monad Fetch where
   return :: a -> Fetch a
@@ -450,34 +522,60 @@ instance Monad Fetch where
   Blocked requests k >>= f =
     Blocked requests (\responses -> k responses >>= f)
 
--- sequences the requests:
+{- For example, if we write a 'Fetch' job that makes two requests in
+   sequence, like this: -}
 
--- makeRequest "A" >>= \a -> makeRequest "B" >>= \b -> return (a,b)
---
---     Blocked ["A"] (\[response] -> Done response)
--- >>= \a -> Blocked ["B"] (\[response] -> Done response)
--- >>= \b -> return (a,b)
---
--- Blocked ["A"] (\[a] -> Blocked "B" (\[b] -> Done (a,b)))
+sequentialJob :: Fetch (Response, Response)
+sequentialJob =
+  do a <- makeRequest "A"
+     b <- makeRequest "B"
+     return (a, b)
 
+{- Then if we print this out, we can see that the 'Fetch' job is first
+   'Blocked' on the request for "A", and will not proceed until this
+   request is fulfilled:
 
+      > sequentialJob
+      (Blocked ["A"] <waiting>)
 
+   If we could print out functions, then the whole 'Fetch' job would
+   look like this, showing that the "A" request is scheduled to happen
+   before the "B" request.
 
--- The applicative version allows requests in parallel.
+      Blocked ["A"] (\[a] -> Blocked ["B"] (\[b] -> Done (a,b)))
+
+   An implementation of the 'Monad' interface has no option but to
+   sequence the jobs, because it cannot access the second 'Fetch' job
+   until it knows the value returned by the first, due to the
+   potential data dependency.
+
+   In contrast, the 'Applicative' interface has access to both of the
+   'Fetch' jobs it is given, and can merge them when it sees fit,
+   allowing for multiple requests with no data dependency to be
+   parallelised. Here is the implementation of 'Applicative' for
+   'Fetch': -}
 
 instance Applicative Fetch where
   pure :: a -> Fetch a
   pure x = Done x
+{- The 'pure' implementation is the same as the 'return' in the 'Monad'
+   implementation. -}
 
+{- The 'apply' ('<*>') implementation merges the two 'Fetch' jobs: -}
   (<*>) :: Fetch (a -> b) -> Fetch a -> Fetch b
   Done f               <*> Done a =
     Done (f a)
+{- If both are done, then it applies the function from the first to the
+   value from the second. -}
 
   Done f               <*> Blocked requests k =
     Blocked requests (\responses -> Done f <*> k responses)
 
   Blocked requests k   <*> Done a =
     Blocked requests (\responses -> k responses <*> Done a)
+{- If one is done and the other is blocked, then the result is blocked
+   on the same requests, and 'apply' is called recursively to apply
+   the 'Fetch' job after the response has been received. -}
 
   Blocked requests1 k1 <*> Blocked requests2 k2 =
     Blocked (requests1 ++ requests2)
@@ -486,11 +584,43 @@ instance Applicative Fetch where
              responses2 = drop (length requests1) responses
          in
          k1 responses1 <*> k2 responses2)
+{- If both are Blocked, then we concatenate the lists of requests,
+   creating a single 'Blocked' constructor that contains several
+   requests that can be executed in parallel. The continuation then
+   has to separate the responses and pass them on to the two
+   continuations. -}
 
--- batches requests to happen in parallel.
+{- Since every Applicative must also have a 'Functor' implementation, we
+   just give the simplest 'fmap' implementation in terms of 'pure' and
+   '<*>' as we described above: -}
 
--- pure (\a b -> (a,b)) <*> makeRequest "A" <*> makeRequest "B"
---
---  ...
---
--- Blocked ["A","B"] (\[a,b] -> Done (a,b))
+instance Functor Fetch where
+  fmap :: (a -> b) -> Fetch a -> Fetch b
+  fmap f fetch = pure f <*> fetch
+
+{- To see the difference this 'Applicative' instance makes, we rewrite
+   the 'sequentialJob' 'Fetch' to use the 'Applicative' interface
+   instead: -}
+
+parallelJob :: Fetch (Response, Response)
+parallelJob =
+  pure (\a b -> (a, b)) <*> makeRequest "A" <*> makeRequest "B"
+
+{- If we print this out, we can see that it has merged the two requests
+   "A" and "B" into one 'Blocked', meaning that something executing
+   these 'Fetch' jobs can executed them in parallel:
+
+       > parallelJob
+       (Blocked ["A","B"] <waiting>)
+
+   If we could print out functions, then 'parallelJob' would look
+   like this:
+
+       Blocked ["A","B"] (\[a,b] -> Done (a,b))
+
+   Showing that there is only one 'Blocked', with two jobs to run in
+   parallel. Once they have both finished, the task is 'Done'.
+
+   In Lecture 20, we will return to 'Fetch' and write a real parallel
+   executor that executes the requests in parallel, using the
+   concurrency features of Haskell. -}
