@@ -50,6 +50,8 @@ The [Evaluation Game](https://personal.cis.strath.ac.uk/robert.atkey/terms.html)
 
 - [Some questions on Recursion Schemes](tutorials/RecSchemesQuestions.hs)
 
+- [Some questions on Monads and Parsing](tutorials/MonadsQuestions.hs) and [their solutions](tutorials/MonadsSolutions.hs).
+
 ## Coursework
 
 This course is entirely assessed by coursework. The split between the three exercises is shown below:
