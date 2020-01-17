@@ -801,7 +801,7 @@ picture =
 
 
 {----------------------------------------------------------------------}
-{- PART 3 : PROCESSES                                                 -}
+{- PART 4 : PROCESSES                                                 -}
 {----------------------------------------------------------------------}
 
 {- This part of the exercise generalises the communicating processes
@@ -1008,7 +1008,7 @@ echoFromSequ = undefined
 {----------------------------------------------------------------------}
 
 {- Below are the functions implementing BMP file output. These are used
-   by Part 2 of the exercise above. -}
+   by Part 3 of the exercise above. -}
 
 
 {- 'writeBMP filename bitmap' samples 'bitmap' for the pixels in the
