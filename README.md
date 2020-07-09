@@ -58,15 +58,15 @@ This course is entirely assessed by coursework. The split between the three exer
 
 - Exercise 1 (30%) : [First Order Programming](exercises/Ex1.hs). This was released on Thursday 3rd October (week 2), and the final deadline and test are on Monday 21st October (week 5).
 
-  The resit text questions are [here](exercises/Ex1ResitTest.hs).
+  The resit test questions are [here](exercises/Ex1ResitTest.hs).
 
 - Exercise 2 (30%) : [Higher Order Programming](exercises/Ex2.hs). This was be released on Thursday 17th October (week 4), and the final deadline and test are on Monday 11th November (week 8). Example pictures [green-everywhere](exercises/green-everywhere.bmp), [blue-and-green](exercises/blue-and-green.bmp), [doughnut](exercises/doughnut.bmp), [red-circle-on-blue](exercises/red-circle-on-blue.bmp), [red-rect-on-blue](exercises/red-rect-on-blue.bmp), and [picture](exercises/picture.bmp).
 
-   The resit test questions will appear soon.
+  The resit test questions are [here](exercises/Ex2ResitTest.hs).
 
 - Exercise 3 (40%) : [GHOUL](exercises/Ex3.hs). This was be released on Thursday 7th November (week 7), and the final deadline and test are on Monday 2nd December (week 11). Example GHOUL programs [plus.ghoul](exercises/plus.ghoul).
 
-   The resit test questions will appear soon.
+  The resit test questions are [here](exercises/Ex3ResitTest.hs).
 
 After each of the exercises has been marked, we will email you your marks
 
